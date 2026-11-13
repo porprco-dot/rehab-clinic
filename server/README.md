@@ -5,7 +5,7 @@
 
 ## پیش‌نیاز
 - Python نسخه‌ی ۳٫۹ یا بالاتر: `python3 --version`
-- آزاد بودن پورت 8105: `sudo ss -ltnp | grep 8105` (اگر خروجی داشت، پورت اشغال است؛ عدد دیگری انتخاب کنید و در `deploy/diyeh-api.service` و `deploy/nginx_diyeh_snippet.conf` عوض کنید.)
+- آزاد بودن پورت 8105: `sudo ss -ltnp | grep 8105` (اگر خروجی داشت، پورت اشغال است؛ عدد دیگری انتخاب کنید و در `deploy/diyeh-api.service` و `deploy/nginx_api.vakilrobot.ir.conf` عوض کنید.)
 - رکورد DNS از نوع A برای `api.vakilrobot.ir` به IP همین سرور.
 - nginx و certbot (برای HTTPS؛ اپ اندروید بدون HTTPS وصل نمی‌شود).
 
