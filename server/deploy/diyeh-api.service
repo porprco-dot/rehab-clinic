@@ -1,0 +1,40 @@
+# systemd unit for the diyeh rates API.
+# Install: sudo cp diyeh-api.service /etc/systemd/system/ && sudo systemctl daemon-reload
+#          sudo systemctl enable --now diyeh-api
+#
+# Before installing, check that port 8105 is free:  sudo ss -ltnp | grep 8105
+# If it is taken, change the port below AND in the nginx snippet.
+#
+# To roll back to an earlier code version, change "diyeh_api_v1:app" to the
+# previous file name (e.g. diyeh_api_v1:app when v2 is running), then:
+#          sudo systemctl daemon-reload && sudo systemctl restart diyeh-api
+
+[Unit]
+Description=Diyeh rates API (Hoghoogh-e Darman)
+After=network.target
+
+[Service]
+Type=simple
+User=diyehapi
+Group=diyehapi
+WorkingDirectory=/opt/diyeh-api
+Environment=DIYEH_CONFIG=/opt/diyeh-api/server_config.json
+ExecStart=/opt/diyeh-api/venv/bin/gunicorn --bind 127.0.0.1:8105 --workers 2 --access-logfile - diyeh_api_v1:app
+Restart=always
+RestartSec=3
+
+# Hardening: the service only needs to read its own folder.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/diyeh-api
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryMax=256M
+
+[Install]
+WantedBy=multi-user.target
