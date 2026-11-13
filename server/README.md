@@ -6,7 +6,8 @@
 ## پیش‌نیاز
 - Python نسخه‌ی ۳٫۹ یا بالاتر: `python3 --version`
 - آزاد بودن پورت 8105: `sudo ss -ltnp | grep 8105` (اگر خروجی داشت، پورت اشغال است؛ عدد دیگری انتخاب کنید و در `deploy/diyeh-api.service` و `deploy/nginx_diyeh_snippet.conf` عوض کنید.)
-- برای اپ اندروید، دسترسی از طریق **HTTPS** (دامنه + nginx) لازم است.
+- رکورد DNS از نوع A برای `api.vakilrobot.ir` به IP همین سرور.
+- nginx و certbot (برای HTTPS؛ اپ اندروید بدون HTTPS وصل نمی‌شود).
 
 ## نصب (یک‌بار)
 
@@ -46,10 +47,14 @@ curl http://127.0.0.1:8105/api/v1/health
 ```
 پاسخ درست: `{"schema_version":1,"status":"ok","updated_at":"1405-08-22","year":1405}`
 
-۶. nginx: محتوای `deploy/nginx_diyeh_snippet.conf` را **داخل** بلوک `server` موجودِ HTTPS دامنه‌تان اضافه کنید، سپس:
+۶. nginx و HTTPS (سایت جدا برای `api.vakilrobot.ir`، بدون دست زدن به سایت‌های دیگر):
 ```bash
+sudo cp /opt/diyeh-api/deploy/nginx_api.vakilrobot.ir.conf /etc/nginx/sites-available/api.vakilrobot.ir
+sudo ln -s /etc/nginx/sites-available/api.vakilrobot.ir /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
-curl https://YOUR_DOMAIN/api/v1/health
+curl http://api.vakilrobot.ir/api/v1/health
+sudo certbot --nginx -d api.vakilrobot.ir
+curl https://api.vakilrobot.ir/api/v1/health
 ```
 
 ## کارهای روزمره

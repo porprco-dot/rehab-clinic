@@ -30,7 +30,7 @@ assets/
 flutter pub get
 flutter test                      # همه‌ی تست‌ها
 flutter run                       # بدون سرور: فقط نرخ داخل اپ / کش
-flutter run --dart-define=DIYEH_API_BASE_URL=https://YOUR_API_DOMAIN
+flutter run --dart-define=DIYEH_API_BASE_URL=https://api.vakilrobot.ir
 ```
 برای آزمایش با سرور روی همان کامپیوتر در شبیه‌ساز اندروید (فقط نسخه‌ی debug اجازه‌ی http دارد):
 ```bash
