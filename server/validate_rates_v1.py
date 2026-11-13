@@ -186,7 +186,7 @@ def validate_rates(data):
             err(f"{path}.status باید \"approved\" یا \"pending\" باشد")
         if not isinstance(item.get("haram_applicable"), bool):
             err(f"{path}.haram_applicable باید true یا false باشد")
-        for key in ("article", "source_url", "note"):
+        for key in ("short_title", "article", "source_url", "note"):
             value = item.get(key)
             if value is not None and not _is_nonempty_str(value):
                 err(f"{path}.{key} باید متن یا null باشد")
